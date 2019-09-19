@@ -1,11 +1,12 @@
 import React from 'react'
 
-import Routes from './routes'
+import { MainRoutes } from './routes'
 
-import './global.css'
+import './global.scss'
+import 'antd/dist/antd.css'
 
 export default function App() {
   return (
-    <Routes />
+    <MainRoutes />
   )
 }
