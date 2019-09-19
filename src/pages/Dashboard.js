@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Layout, Menu, Icon, message, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
 
+import Auth from '../services/Auth'
+
 import { DashboardRoutes } from '../routes'
 
 import './Dashboard.scss'
@@ -13,16 +15,27 @@ export default class Dashboard extends Component {
     super(props)
     this.state = {
       collapsed: true,
-      page: ""
+      page: "",
+      ready: false,
+      userData: {}
     }
   }
 
   componentDidMount(){
-    this.props.history.push('/dashboard/hackatons')
+    const userData = {
+        name: 'Guilherme Mota',
+        email: 'guilhermebromonschenkel@gmail.com',
+        team: 'buggr',
+    }
+    Auth.userData = userData
+    this.setState({ ready: true, userData })
+    //this.props.history.push('/dashboard/hackatons')
   }
 
   render() {
     return (
+      this.state.ready 
+      &&
       <Layout className="dashboard-container">
         <Sider
           breakpoint="lg"
@@ -35,39 +48,31 @@ export default class Dashboard extends Component {
           }}
           collapsed={this.state.collapsed}
         >
-          <div className="user">
-            <Avatar icon="user" />
+          <div className="user-container">
+            <Avatar className="user-avatar" icon="user" />
+            <span className="user-name">{this.state.userData.name}</span>
           </div>
           <Menu
             theme="dark"
             mode="inline"
             defaultSelectedKeys={[this.state.page]}
           >
-            <Menu.Item key="Home">
-              <Link
-                to="/dashboard/home"
-                onClick={() => this.handleChangePage("Home")}
-              >
+            <Menu.Item key="Hackatons">
+              <Link to="/dashboard/hackatons" onClick={() => this.setState({ collapsed: true })}>
                 <Icon type="home" />
-                <span className="nav-text">Home</span>
+                <span className="nav-text">Hackatons</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="Profile">
-              <Link
-                to="/dashboard/profile"
-                onClick={() => this.handleChangePage("Profile")}
-              >
+            <Menu.Item key="Feedback">
+              <Link to="/dashboard/feedback" onClick={() => this.setState({ collapsed: true })}>
                 <Icon type="user" />
-                <span className="nav-text">Profile</span>
+                <span className="nav-text">Feedback</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="Tools">
-              <Link
-                to="/dashboard/tools"
-                onClick={() => this.handleChangePage("Tools")}
-              >
+            <Menu.Item key="Presentation">
+              <Link to="/dashboard/presentation" onClick={() => this.setState({ collapsed: true })}>
                 <Icon type="tool" />
-                <span className="nav-text">Tools</span>
+                <span className="nav-text">Apresentação</span>
               </Link>
             </Menu.Item>
           </Menu>
