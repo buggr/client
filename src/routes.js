@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import Dashboard from './pages/Dashboard'
 
-import Hackatons from './components/Hackatons'
+import Hackatonlist from './components/HackatonList'
 
 export function MainRoutes(){
     return (
@@ -16,7 +16,7 @@ export function MainRoutes(){
 export function DashboardRoutes(){
     return (
         <>
-            <Route path="/dashboard/hackatons" component={Hackatons} />
+            <Route path="/dashboard/hackatons" component={Hackatonlist} />
         </>
     )
 }
