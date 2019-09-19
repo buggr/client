@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Layout, Menu, Icon, message, Avatar } from 'antd'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react"
+import { Layout, Menu, Icon, Avatar } from "antd"
+import { Link } from "react-router-dom"
 
-import Auth from '../services/Auth'
+import Auth from "../services/Auth"
 
-import { DashboardRoutes } from '../routes'
+import { DashboardRoutes } from "../routes"
 
-import './Dashboard.scss'
+import "./Dashboard.scss"
 
 const { Header, Content, Sider } = Layout
 
@@ -15,88 +15,105 @@ export default class Dashboard extends Component {
     super(props)
     this.state = {
       collapsed: true,
-      page: "",
+      page: '',
       ready: false,
-      userData: {}
+      userData: {},
     }
+
+    this.getCurrentPage = this.getCurrentPage.bind(this)
   }
 
-  componentDidMount(){
+  getCurrentPage(){
+    const pagesList = ['hackatons', 'feedback', 'presentation']
+    const pageName = pagesList.filter(page => this.props.history.location.pathname.includes(page))
+    this.setState({ page: pageName })
+  }
+
+  componentDidMount() {
     const userData = {
-        name: 'Guilherme Mota',
-        email: 'guilhermebromonschenkel@gmail.com',
-        team: 'buggr',
+      name: "Guilherme Mota Bromonschenkel Lima",
+      email: "guilhermebromonschenkel@gmail.com",
+      team: "buggr",
+      avatar_url: "https://avatars3.githubusercontent.com/u/42042433?s=460&v=4"
     }
     Auth.userData = userData
+    this.getCurrentPage()
     this.setState({ ready: true, userData })
     //this.props.history.push('/dashboard/hackatons')
   }
 
   render() {
     return (
-      this.state.ready 
-      &&
-      <Layout className="dashboard-container">
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={broken => {
-            console.log(broken)
-          }}
-          onCollapse={(collapsed, type) => {
-            this.setState({ collapsed })
-          }}
-          collapsed={this.state.collapsed}
-        >
-          <div className="user-container">
-            <Avatar className="user-avatar" icon="user" />
-            <span className="user-name">{this.state.userData.name}</span>
-          </div>
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={[this.state.page]}
+      this.state.ready && (
+        <Layout className="dashboard-container">
+          <Sider
+            theme="light"
+            breakpoint="lg"
+            collapsedWidth="0"
+            onBreakpoint={broken => {
+              console.log(broken)
+            }}
+            onCollapse={(collapsed, type) => {
+              this.setState({ collapsed })
+            }}
+            collapsed={this.state.collapsed}
           >
-            <Menu.Item key="Hackatons">
-              <Link to="/dashboard/hackatons" onClick={() => this.setState({ collapsed: true })}>
-                <Icon type="home" />
-                <span className="nav-text">Hackatons</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="Feedback">
-              <Link to="/dashboard/feedback" onClick={() => this.setState({ collapsed: true })}>
-                <Icon type="user" />
-                <span className="nav-text">Feedback</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="Presentation">
-              <Link to="/dashboard/presentation" onClick={() => this.setState({ collapsed: true })}>
-                <Icon type="tool" />
-                <span className="nav-text">Apresentação</span>
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout>
-          <Header style={{ background: "#fff", padding: 0, display: "flex" }}>
-            <h1 style={{ margin: "auto auto auto 16px", color: "#001529" }}>
-              {this.state.page}
-            </h1>
+            <div className="user-container">
+              <Avatar className="user-avatar" icon="user" size={40} src={this.state.userData.avatar_url} />
+              <span className="user-name">{this.state.userData.name}</span>
+            </div>
             <Menu
-              theme="white"
-              mode="horizontal"
-              style={{ lineHeight: "64px", margin: "auto 0 auto auto" }}
+              theme="light"
+              mode="inline"
+              defaultSelectedKeys={this.state.page}
             >
-              <Menu.Item key="1" onClick={this.handleLogout}>
-                Logout
+              <Menu.Item key="hackatons">
+                <Link
+                  to="/dashboard/hackatons"
+                  onClick={() => this.setState({ page: ['hackatons'], collapsed: true })}
+                >
+                  <Icon type="home" />
+                  <span className="nav-text">Hackatons</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="feedback">
+                <Link
+                  to="/dashboard/feedback"
+                  onClick={() => this.setState({ page: ['feedback'], collapsed: true })}
+                >
+                  <Icon type="user" />
+                  <span className="nav-text">Feedback</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="presentation">
+                <Link
+                  to="/dashboard/presentation"
+                  onClick={() => this.setState({ page: ['presentation'], collapsed: true })}
+                >
+                  <Icon type="tool" />
+                  <span className="nav-text">Apresentação</span>
+                </Link>
               </Menu.Item>
             </Menu>
-          </Header>
-          <Content style={{ margin: "24px 16px 0" }}>
-            <DashboardRoutes />
-          </Content>
+          </Sider>
+          <Layout>
+            <Header style={{ background: "#fff", padding: 0, display: "flex" }}>
+              <Menu
+                theme="white"
+                mode="horizontal"
+                style={{ lineHeight: "64px", margin: "auto 0 auto auto" }}
+              >
+                <Menu.Item key="1" onClick={this.handleLogout}>
+                  Logout
+                </Menu.Item>
+              </Menu>
+            </Header>
+            <Content style={{ margin: "24px 16px 0" }}>
+              <DashboardRoutes />
+            </Content>
+          </Layout>
         </Layout>
-      </Layout>
+      )
     )
   }
 }
