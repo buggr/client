@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
 import { Spin } from 'antd'
 import Fade from 'react-reveal/Fade'
+import { withUserAgent } from 'react-useragent'
+
+import ErrorMessage from '../components/ErrorMessage'
 
 import './Main.scss'
 
-export default class Main extends Component {
+class Main extends Component {
     constructor(props){
         super(props)
         this.state = {
             email: '',
             password: '',
+            error: !this.props.ua.mobile,
         }
     }
 
     componentDidMount(){
         setTimeout(() => {
-            this.props.history.push('/login')
+            if (!this.state.error) this.props.history.push('/login')
         }, 1000)
     }
 
@@ -23,9 +27,22 @@ export default class Main extends Component {
         return (
             <Fade>
                 <div className="main-container">
-                    <Spin style={{margin: "auto"}} size="large" />
+                    {
+                        !this.state.error 
+                        ?   <Spin 
+                                style={{margin: "auto"}} 
+                                size="large" 
+                            />
+                        :   <ErrorMessage 
+                                style={{margin: "auto"}} 
+                                color={"#FFF"}
+                                content={"This app is only supposed to work on mobile devices"} 
+                            />
+                    }
                 </div>
             </Fade>
         )
     }
 }
+
+export default withUserAgent(Main)
