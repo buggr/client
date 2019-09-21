@@ -44,7 +44,7 @@ export default class Dashboard extends Component {
     Auth.userData = userData
     this.getCurrentPage()
     this.setState({ ready: true, userData })
-    this.props.history.push('/dashboard/hackatons')
+    //this.props.history.push('/dashboard/hackatons')
   }
 
   render() {

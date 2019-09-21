@@ -129,7 +129,7 @@ function ProjectAboutCard(){
 
 function FeedbackList(){
     return(<>
-        <div className="feedback-container">
+        <div className="feedback-card-container">
             <div className="feedback-side">
                 <Rate value={4} />
             </div>
@@ -138,70 +138,5 @@ function FeedbackList(){
                 maior na parte da parte interessante teria ficado muito melhor ainda!
             </p>
         </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        <div className="feedback-container">
-            <div className="feedback-side">
-                <Rate value={5} />
-            </div>
-            <p>
-                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
-            </p>
-        </div>
-        
     </>)
 }

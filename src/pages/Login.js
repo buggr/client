@@ -25,7 +25,7 @@ export default class Login extends Component {
         event.preventDefault()
         this.setState({ loading: true, email: '', password: '' })
         setTimeout(() => {
-            this.props.history.push('/dashboard')
+            this.props.history.push('/dashboard/hackatons')
         }, 1000)
     }
 

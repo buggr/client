@@ -1,0 +1,19 @@
+.feedback-container {
+    width: 91vw;
+    height: 85vh;
+    display: flex;
+
+    .feedback-loading {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+            margin: auto auto 20px;
+        }
+
+        .ant-spin-dot-item {
+            background-color: #ff1060 !important; 
+        }
+    }
+}
