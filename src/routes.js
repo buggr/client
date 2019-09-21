@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Main from './pages/Main'
 
 import Hackatonlist from './components/HackatonList'
+import HackatonInfo from './components/HackatonInfo'
 
 export function MainRoutes(){
     return (
@@ -21,6 +22,7 @@ export function DashboardRoutes(){
     return (
         <>
             <Route path="/dashboard/hackatons" component={Hackatonlist} />
+            <Route exact path="/dashboard/hackatons/:hackaton_id" component={HackatonInfo} />
         </>
     )
 }

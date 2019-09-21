@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from 'react-router-dom'
 
 import ErrorMessage from "../ErrorMessage"
 
@@ -13,10 +14,14 @@ export default function HackatonList() {
     <div className="hackatons-container">
       {data.length ? (
         data.map((hackaton, index) => (
-          <HackatonCard
-            hackaton={hackaton}
+          <Link 
+            to={`/dashboard/hackaton/${hackaton.id}`}
             key={hackaton.title.toLowerCase() + "-" + index}
-          />
+          >
+            <HackatonCard
+              hackaton={hackaton}
+            />
+          </Link>
         ))
       ) : (
         <ErrorMessage
