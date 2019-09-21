@@ -82,7 +82,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        width: 170px;
+        width: 50px;
         margin: auto;
     }
 }
@@ -107,8 +107,11 @@
     border-radius: 0 !important;
 }
 .ant-modal-body {
-    padding: 24px 0 !important;
+    padding: 24px 0 12px !important;
+    overflow-y: scroll;
+    height: 83vh !important;
 }
 .ant-rate {
     font-size: 15px !important;
+    width: 50px !important;
 }

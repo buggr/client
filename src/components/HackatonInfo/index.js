@@ -61,7 +61,6 @@ export default class HackatonInfo extends Component {
                                         key="submit" 
                                         type="primary" 
                                         onClick={() => this.setState({ modal: false })}
-                                        centered
                                     >
                                         Fechar
                                     </Button>
@@ -147,5 +146,62 @@ function FeedbackList(){
                 Sensacional! Ter focado na parte do sei lá o que ajudou muito!
             </p>
         </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+        
     </>)
 }
