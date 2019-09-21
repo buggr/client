@@ -15,7 +15,7 @@ export default function HackatonList() {
       {data.length ? (
         data.map((hackaton, index) => (
           <Link 
-            to={`/dashboard/hackaton/${hackaton.id}`}
+            to={`/dashboard/hackatons/${hackaton.id}`}
             key={hackaton.title.toLowerCase() + "-" + index}
           >
             <HackatonCard

@@ -21,8 +21,8 @@ export function MainRoutes(){
 export function DashboardRoutes(){
     return (
         <>
-            <Route path="/dashboard/hackatons" component={Hackatonlist} />
-            <Route exact path="/dashboard/hackatons/:hackaton_id" component={HackatonInfo} />
+            <Route exact path="/dashboard/hackatons" component={Hackatonlist} />
+            <Route path="/dashboard/hackatons/:hackaton_id" component={HackatonInfo} />
         </>
     )
 }
