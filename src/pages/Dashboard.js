@@ -21,12 +21,17 @@ export default class Dashboard extends Component {
     }
 
     this.getCurrentPage = this.getCurrentPage.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   getCurrentPage(){
     const pagesList = ['hackatons', 'feedback', 'presentation']
     const pageName = pagesList.filter(page => this.props.history.location.pathname.includes(page))
     this.setState({ page: pageName })
+  }
+
+  handleLogout(){
+    this.props.history.push('/login')
   }
 
   componentDidMount() {
@@ -39,7 +44,7 @@ export default class Dashboard extends Component {
     Auth.userData = userData
     this.getCurrentPage()
     this.setState({ ready: true, userData })
-    //this.props.history.push('/dashboard/hackatons')
+    this.props.history.push('/dashboard/hackatons')
   }
 
   render() {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Fade from 'react-reveal/Fade'
 
 import logo from '../assets/logo.png'
 
@@ -23,12 +22,13 @@ export default class Login extends Component {
     handleSubmit = event => {
         event.preventDefault()
         this.setState({ email: '', password: '' })
+        this.props.history.push('/dashboard')
     }
 
     render(){
         return (
             <div className="login-container">
-                <img className="logo" src={logo} />
+                <img className="logo" src={logo} alt="" />
                 <form className="form-container" onSubmit={this.handleSubmit}>
                     <input 
                         placeholder="Type your email" 
