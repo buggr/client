@@ -8,6 +8,7 @@ import Main from './pages/Main'
 import Hackatonlist from './components/HackatonList'
 import HackatonInfo from './components/HackatonInfo'
 import Feedback from './components/Feedback'
+import Presentation from './components/Presentation'
 
 export function MainRoutes(){
     return (
@@ -25,6 +26,7 @@ export function DashboardRoutes(){
             <Route exact path="/dashboard/hackatons" component={Hackatonlist} />
             <Route path="/dashboard/hackatons/:hackaton_id" component={HackatonInfo} />
             <Route path="/dashboard/feedback" component={Feedback} />
+            <Route path="/dashboard/presentation" component={Presentation} />
         </>
     )
 }
