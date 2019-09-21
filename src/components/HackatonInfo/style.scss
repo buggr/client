@@ -55,3 +55,23 @@
         margin-bottom: 0;
     }
 }
+
+.ant-modal-wrap {
+    top: -8px !important;
+    bottom: auto !important;
+}
+.ant-btn-primary {
+    background-color: #ff1060 !important; 
+    border-color: #ff1060 !important; 
+}
+.ant-modal {
+    top: 0 !important;
+    
+    @media (max-width: 767px){
+        max-width: 100vw !important;
+    }
+}
+.ant-modal-content {
+    height: 100vh !important;
+    border-radius: 0 !important;
+}

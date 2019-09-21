@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Spin, Avatar, Icon } from 'antd'
+import { Spin, Avatar, Modal, Button } from 'antd'
 
 import Api from '../../services/Api'
 
@@ -14,7 +14,10 @@ export default class HackatonInfo extends Component {
             hackaton_id: this.props.match.params.hackaton_id,
             hackaton: {},
             ready: false,
+            modal: false,
         }
+
+        this.handleFeedbacks = this.handleFeedbacks.bind(this)
     }
 
     componentDidMount(){
@@ -25,6 +28,12 @@ export default class HackatonInfo extends Component {
         }, 0)
     }
 
+    handleFeedbacks(){
+        if (!this.state.hackaton.ended) return
+
+        this.setState({ modal: true })
+    }
+
     render(){
         return(
             <div className="hackaton-info-container">
@@ -32,7 +41,7 @@ export default class HackatonInfo extends Component {
                     this.state.ready
                     ?   (<>
                             <button
-                                disabled={!this.state.hackaton.ended}
+                                onClick={this.handleFeedbacks}
                                 style={{
                                     backgroundColor: this.state.hackaton.ended ? "#ff1060" : "#666"
                                 }}
@@ -42,6 +51,25 @@ export default class HackatonInfo extends Component {
                             <HackatonAboutCard />
                             <TeamAboutCard />
                             <ProjectAboutCard />
+                            <Modal
+                                title="Feedbacks"
+                                onCancel={() => this.setState({ modal: false })}
+                                onOk={() => this.setState({ modal: false })}
+                                visible={this.state.modal}
+                                footer={[
+                                    <Button 
+                                        key="submit" 
+                                        type="primary" 
+                                        onClick={() => this.setState({ modal: false })}
+                                        style={{width: "100%",  top: 2 }}
+                                        centered
+                                    >
+                                        Fechar
+                                    </Button>
+                                ]}
+                            >
+TESSTE
+                            </Modal>
                         </>)
                     :   <Spin 
                             style={{ margin: "auto" }} 
