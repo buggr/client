@@ -5,6 +5,15 @@
     display: flex;
     flex-direction: column;
 
+    button {
+        border-width: 0;
+        margin-bottom: 24px;
+        padding: 10px 0;
+        background-color: #ff1060;
+        color: #FFF;
+        font-weight: bold;
+    }
+
     .ant-spin-dot-item {
         background-color: #ff1060 !important; 
     }

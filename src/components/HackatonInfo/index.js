@@ -31,6 +31,14 @@ export default class HackatonInfo extends Component {
                 {
                     this.state.ready
                     ?   (<>
+                            <button
+                                disabled={!this.state.hackaton.ended}
+                                style={{
+                                    backgroundColor: this.state.hackaton.ended ? "#ff1060" : "#666"
+                                }}
+                            >
+                                {this.state.hackaton.ended ? "VER FEEDBACK" : "FEEDBACK INDISPONÍVEL"}
+                            </button>
                             <HackatonAboutCard />
                             <TeamAboutCard />
                             <ProjectAboutCard />
