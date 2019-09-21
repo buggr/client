@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Spin, Avatar, Modal, Button } from 'antd'
+import { Spin, Avatar, Modal, Button, Icon } from 'antd'
 
 import Api from '../../services/Api'
 
@@ -83,7 +83,10 @@ TESSTE
 function HackatonAboutCard(){
     return(
         <div className="about-card-container">
-            <h1 className="card-title">Hackaton</h1>
+            <div className="card-header">
+                <Icon type="info-circle" size={26} style={{ marginRight: 10 }} />
+                <h1 className="header-title">Hackaton</h1>
+            </div>
             <p>
                 <strong>Name: </strong>OpenHack Shawee
                 <br></br>
@@ -96,7 +99,10 @@ function HackatonAboutCard(){
 function TeamAboutCard(){
     return(
         <div className="about-card-container">
-            <h1 className="card-title">Team</h1>
+            <div className="card-header">
+                <Icon type="team" size={26} style={{ marginRight: 10 }} />
+                <h1 className="header-title">Team</h1>
+            </div>
             {
                 team.map(member => <Avatar key={member} style={{ marginRight: 5 }} icon="user" size={40} />)
             }
@@ -107,7 +113,10 @@ function TeamAboutCard(){
 function ProjectAboutCard(){
     return(
         <div className="about-card-container">
-            <h1 className="card-title">Project</h1>
+            <div className="card-header">
+                <Icon type="project" size={26} style={{ marginRight: 10 }} />
+                <h1 className="header-title">Project</h1>
+            </div>
             <p>
                 <strong>Name: </strong>Opinaton
                 <br></br>
