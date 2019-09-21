@@ -33,7 +33,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     .card-title {
-        color: #777;
+        color: #666;
         font-weight: bold;
         font-size: 18px;
         line-height: 18px;
@@ -43,5 +43,6 @@
     p {
         line-height: 23px;
         text-align: justify;
+        margin-bottom: 0;
     }
 }
