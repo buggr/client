@@ -61,7 +61,6 @@ export default class HackatonInfo extends Component {
                                         key="submit" 
                                         type="primary" 
                                         onClick={() => this.setState({ modal: false })}
-                                        style={{width: "100%",  top: 2 }}
                                         centered
                                     >
                                         Fechar
