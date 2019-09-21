@@ -1,7 +1,28 @@
 .feedback-container {
     width: 91vw;
-    height: 85vh;
+    height: 80vh;
     display: flex;
+    background-color: white;
+    flex-direction: column;
+
+    .presentation-name {
+        font-size: 17px;
+        padding: 10px;
+        margin: 0 auto;
+
+        strong {
+            font-size: 20px;
+            color: #ff1060;
+            border-bottom: 2px solid #ff1060;
+        }
+    }
+
+    .presentation-opnion {
+        margin: 50px auto 10px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #555;
+    }
 
     .feedback-loading {
         margin: auto;

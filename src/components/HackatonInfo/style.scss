@@ -85,6 +85,11 @@
         width: 50px;
         margin: auto;
     }
+
+    .ant-rate {
+        font-size: 15px !important;
+        width: 50px !important;
+    }
 }
 
 .ant-modal-wrap {
@@ -110,8 +115,4 @@
     padding: 24px 0 12px !important;
     overflow-y: scroll;
     height: 83vh !important;
-}
-.ant-rate {
-    font-size: 15px !important;
-    width: 50px !important;
 }
