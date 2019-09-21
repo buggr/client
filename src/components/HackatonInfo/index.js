@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Spin, Avatar, Modal, Button, Icon } from 'antd'
+import { Spin, Avatar, Modal, Button, Icon, Rate } from 'antd'
 
 import Api from '../../services/Api'
 
@@ -67,7 +67,7 @@ export default class HackatonInfo extends Component {
                                     </Button>
                                 ]}
                             >
-TESSTE
+                                <FeedbackList />
                             </Modal>
                         </>)
                     :   <Spin 
@@ -126,4 +126,26 @@ function ProjectAboutCard(){
             </p>
         </div>
     )
+}
+
+function FeedbackList(){
+    return(<>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={4} />
+            </div>
+            <p>
+                Eu achei o projeto muito legal, porém, imagino que caso tivessem dado uma ênfase
+                maior na parte da parte interessante teria ficado muito melhor ainda!
+            </p>
+        </div>
+        <div className="feedback-container">
+            <div className="feedback-side">
+                <Rate value={5} />
+            </div>
+            <p>
+                Sensacional! Ter focado na parte do sei lá o que ajudou muito!
+            </p>
+        </div>
+    </>)
 }

@@ -63,6 +63,30 @@
     }
 }
 
+.feedback-container {
+    margin: auto;
+    width: 95vw;
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.08);
+    margin-bottom: 15px;
+    padding: 8px 10px;
+    display: flex;
+    text-align: justify;
+
+    p {
+        margin: auto 0;
+    }
+
+    .feedback-side {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 170px;
+        margin: auto;
+    }
+}
+
 .ant-modal-wrap {
     top: -8px !important;
     bottom: auto !important;
@@ -81,4 +105,10 @@
 .ant-modal-content {
     height: 100vh !important;
     border-radius: 0 !important;
+}
+.ant-modal-body {
+    padding: 24px 0 !important;
+}
+.ant-rate {
+    font-size: 15px !important;
 }
