@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'antd'
 
 import logo from '../assets/logo.png'
 
@@ -10,6 +11,7 @@ export default class Login extends Component {
         this.state = {
             email: '',
             password: '',
+            loading: false,
         }
     }
 
@@ -21,8 +23,10 @@ export default class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        this.setState({ email: '', password: '' })
-        this.props.history.push('/dashboard')
+        this.setState({ loading: true, email: '', password: '' })
+        setTimeout(() => {
+            this.props.history.push('/dashboard')
+        }, 1000)
     }
 
     render(){
@@ -44,7 +48,12 @@ export default class Login extends Component {
                         value={this.state.password}
                         onChange={this.handleChange}
                     />
-                    <button type="submit">Login</button>
+                    <Button 
+                        htmlType="submit" 
+                        loading={this.state.loading}
+                    >
+                        Login
+                    </Button>
                 </form>
             </div>
         )

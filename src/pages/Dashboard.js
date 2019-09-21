@@ -15,7 +15,7 @@ export default class Dashboard extends Component {
     super(props)
     this.state = {
       collapsed: true,
-      page: '',
+      page: ['hackatons'],
       ready: false,
       userData: {},
     }
@@ -27,7 +27,7 @@ export default class Dashboard extends Component {
   getCurrentPage(){
     const pagesList = ['hackatons', 'feedback', 'presentation']
     const pageName = pagesList.filter(page => this.props.history.location.pathname.includes(page))
-    this.setState({ page: pageName })
+    if (pageName.length) this.setState({ page: pageName })
   }
 
   handleLogout(){
