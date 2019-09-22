@@ -8,6 +8,11 @@ import { DashboardRoutes } from "../routes"
 
 import "./Dashboard.scss"
 
+import socketIOClient from "socket.io-client"
+import Feedback from "../components/Feedback"
+
+const socket = socketIOClient('http://127.0.0.1:3030')
+
 const { Header, Content, Sider } = Layout
 
 export default class Dashboard extends Component {

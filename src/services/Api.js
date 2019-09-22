@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const Api = axios.create({
-    baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3030/api' : 'https://opinaton-api.herokuapp.com/api',
+    // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3030/api' : 'https://opinaton-api.herokuapp.com/api',
+    baseURL: 'http://localhost:3030/api',
 })
 export default Api
 

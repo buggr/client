@@ -3,8 +3,13 @@ import { Icon } from 'antd'
 
 import './style.scss'
 import Api from '../../services/Api'
+import socketIOClient from "socket.io-client"
+
+// const socket = socketIOClient('https://opinaton-api.herokuapp.com')
+const socket = socketIOClient('http://127.0.0.1:3030')
 
 let teams = []
+let t
 
 for(let i=0; i<10; i++){
     teams.push({name: 'buggr' + i, id: i})
@@ -35,12 +40,23 @@ export default class Presentation extends Component {
                 presentation: false,
                 current_team: team_id
             })
+
+            stop()
         }
         else if(!this.state.presentation){
             this.setState({
                 presentation: true,
                 current_team: team_id
             })
+
+            t = setInterval(() => {
+                socket.emit('presentation', this.state.current_team)
+                console.log('emitting ' + this.state.current_team)
+            }, 500)
+        }
+
+        function stop() {
+            clearInterval(t)
         }
     }
 

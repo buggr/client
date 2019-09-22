@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
-import { Spin, Rate, Button } from 'antd'
+import { Spin, Rate, Button, message } from 'antd'
 
 import './style.scss'
+import Api from '../../services/Api'
+// import { Socket } from 'dgram'
+
+import socketIOClient from "socket.io-client"
+
+const socket = socketIOClient('http://127.0.0.1:3030')
 
 export default class Feedback extends Component {
     constructor(props){
@@ -12,21 +18,56 @@ export default class Feedback extends Component {
             rate: 0,
             feedback: '',
             loading: false,
+            team_id: '',
+            project_id: '',
+            project: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount(){
-        this.setState({ ready: true })
+        socket.emit('enteredPresentation')
+        socket.on('runingPresentation', teamId => {
+            this.setState({ team_id: teamId , ready: true})
+            console.log('team_id', teamId)
+        })
+    }
+
+    componentWillUnmount() {
+        socket.emit('leavedPresentation')
+    }
+
+    async getData(){
+        const { data: teams } = await Api.get('/team?_id=' + this.state.team_id)
+        this.setState({ project_id: teams[0].projects[0]._id })
     }
 
     handleRate = rate => this.setState({ rate })
 
-    handleChange = event => this.setState({ [event.target.name]: event.target.value })
+    handleChange = event => {
+        this.getData()
+        this.setState({ [event.target.name]: event.target.value })
+    }
 
     handleSubmit(){
-        this.setState({ loading: true })
+        socket.emit('leavedPresentation')
+
+        this.state.project.push({
+            score: this.state.rate, 
+            notes: this.state.feedback
+        })
+
+        this.setState({
+            ready: false
+        })
+        this.postData()
+        message.success("Votação realizada com sucesso")
+    }
+
+    async postData() {
+        Api.post(`/projects/${this.state.project_id}`, {feedback: this.state.project[0]})
+        console.log('Updatado!', this.state.project_id, 'project', {feedback: this.state.project[0]})
     }
 
     render(){
@@ -36,7 +77,7 @@ export default class Feedback extends Component {
                     this.state.ready
                     ?   <>
                             <h1 className="presentation-name">A equipe <strong>{this.state.team}</strong> está apresentando!</h1>
-                            <h1 className="presentation-opnion">Dê sua opnião!</h1>
+                            <h1 className="presentation-opnion">Dê sua opinião!</h1>
                             <Rate 
                                 value={this.state.rate} 
                                 onChange={rate => this.handleRate(rate)}
