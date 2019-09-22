@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Spin, Rate, Button, message } from 'antd'
+import Auth from '../../services/Auth'
 
 import './style.scss'
 import Api from '../../services/Api'
@@ -14,44 +15,45 @@ export default class Feedback extends Component {
         super(props)
         this.state = {
             ready: false,
-            team: "buggr",
+            team: '',
             rate: 0,
             feedback: '',
             loading: false,
             team_id: '',
             project_id: '',
-            project: []
+            project: [],
+            voted: false,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount(){
-        socket.emit('enteredPresentation')
-        socket.on('runingPresentation', teamId => {
-            this.setState({ team_id: teamId , ready: true})
-            console.log('team_id', teamId)
-        })
-    }
+        socket.emit('enteredPresentation', Auth.userData._id)
+        socket.on('runingPresentation', async (team_id, users) => {
+            const currentUser = users.filter(user => user.user_id === Auth.userData._id)
+            const votedTeams = currentUser[0].teams.map(team => team.voted && team.team_id)
 
-    componentWillUnmount() {
-        socket.emit('leavedPresentation')
+            if (!currentUser[0].voted && !votedTeams.includes(team_id)){
+                this.setState({ team_id, ready: true})
+                await this.getData()
+            }
+        })
     }
 
     async getData(){
         const { data: teams } = await Api.get('/team?_id=' + this.state.team_id)
-        this.setState({ project_id: teams[0].projects[0]._id })
+        this.setState({ project_id: teams[0].projects.length && teams[0].projects[0]._id, team: teams[0].name })
     }
 
     handleRate = rate => this.setState({ rate })
 
     handleChange = event => {
-        this.getData()
         this.setState({ [event.target.name]: event.target.value })
     }
 
     handleSubmit(){
-        socket.emit('leavedPresentation')
+        //socket.emit('leavedPresentation')
 
         this.state.project.push({
             score: this.state.rate, 
@@ -59,15 +61,19 @@ export default class Feedback extends Component {
         })
 
         this.setState({
-            ready: false
+            ready: false,
+            rate: 0,
+            feedback: ''
         })
+
+        socket.emit('voted', Auth.userData._id, this.state.team_id)
         this.postData()
         message.success("Votação realizada com sucesso")
     }
 
     async postData() {
-        Api.post(`/projects/${this.state.project_id}`, {feedback: this.state.project[0]})
-        console.log('Updatado!', this.state.project_id, 'project', {feedback: this.state.project[0]})
+        await Api.post(`/projects/${this.state.project_id}`, {feedback: this.state.project[0]})
+        await Api.put(`/teams/${this.state.team_id}/project/${this.state.project_id}`)
     }
 
     render(){

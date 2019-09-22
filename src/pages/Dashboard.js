@@ -54,7 +54,7 @@ export default class Dashboard extends Component {
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={broken => {
-              console.log(broken)
+              
             }}
             onCollapse={(collapsed, type) => {
               this.setState({ collapsed })

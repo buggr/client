@@ -51,7 +51,6 @@ export default class Presentation extends Component {
 
             t = setInterval(() => {
                 socket.emit('presentation', this.state.current_team)
-                console.log('emitting ' + this.state.current_team)
             }, 500)
         }
 

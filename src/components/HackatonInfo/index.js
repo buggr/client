@@ -28,11 +28,12 @@ export default class HackatonInfo extends Component {
         const { data: teams } = await Api.get('/team?name=buggr')
         const { data: hackatons } = await Api.get('/hackathons')
         const [ hackaton ] = hackatons.filter(hackaton => hackaton._id === this.state.hackaton_id)
-        this.setState({ hackaton, team: teams[0], project: teams[0].projects[0], ready: true })
+        const feedback = teams[0].projects[0].feedback.sort((a, b) => b.score - a.score)
+        this.setState({ hackaton, team: teams[0], project: teams[0].projects[0], feedback, ready: true })
     }
 
     handleFeedbacks(){
-        if (!this.state.hackaton.ended) return
+        if (!this.state.feedback.length) return
 
         this.setState({ modal: true })
     }
@@ -46,10 +47,10 @@ export default class HackatonInfo extends Component {
                             <button
                                 onClick={this.handleFeedbacks}
                                 style={{
-                                    backgroundColor: this.state.hackaton.ended ? "#ff1060" : "#666"
+                                    backgroundColor: this.state.feedback.length ? "#ff1060" : "#666"
                                 }}
                             >
-                                {this.state.hackaton.ended ? "VER FEEDBACK" : "FEEDBACK INDISPONÍVEL"}
+                                {this.state.feedback.length ? "VER FEEDBACK" : "FEEDBACK INDISPONÍVEL"}
                             </button>
                             <HackatonAboutCard hackaton={this.state.hackaton} />
                             <TeamAboutCard team={this.state.team} />
@@ -69,7 +70,7 @@ export default class HackatonInfo extends Component {
                                     </Button>
                                 ]}
                             >
-                                <FeedbackList />
+                                <FeedbackList feedback={this.state.feedback} />
                             </Modal>
                         </>)
                     :   <Spin 
@@ -105,8 +106,17 @@ function TeamAboutCard({ team }){
                 <Icon type="team" size={26} style={{ marginRight: 10 }} />
                 <h1 className="header-title">Team</h1>
             </div>
+            <p style={{marginBottom: 10}}><strong>Name: </strong>{team.name}</p>
             {
-                team.participants.map(participant => <Avatar key={participant._id} style={{ marginRight: 5 }} icon="user" size={40} />)
+                team.participants.map(participant => 
+                    <Avatar 
+                        key={participant._id} 
+                        style={{ marginRight: 5 }} 
+                        src={participant.avatar_url} 
+                        icon="user" 
+                        size={40} 
+                    />
+                )
             }
         </div>
     )
@@ -128,16 +138,20 @@ function ProjectAboutCard({ project }){
     )
 }
 
-function FeedbackList(){
+function FeedbackList({ feedback }){
     return(<>
-        <div className="feedback-card-container">
-            <div className="feedback-side">
-                <Rate value={4} />
-            </div>
-            <p>
-                Eu achei o projeto muito legal, porém, imagino que caso tivessem dado uma ênfase
-                maior na parte da parte interessante teria ficado muito melhor ainda!
-            </p>
-        </div>
+        {
+            feedback.map((feedback, index) => 
+                <div 
+                    className="feedback-card-container"
+                    key={'feedback' + index}
+                >
+                    <div className="feedback-side">
+                        <Rate value={feedback.score} />
+                    </div>
+                    <p>{feedback.notes}</p>
+                </div>    
+            )
+        }
     </>)
 }
