@@ -43,6 +43,7 @@ export default class Presentation extends Component {
                             style={{
                                 opacity: this.state.presentation && this.state.current_team !== +equipe.id ? 0.5 : 1
                             }}
+                            key={equipe.id}
                         >
                             <h1>{equipe.name}</h1>
                             <div 
