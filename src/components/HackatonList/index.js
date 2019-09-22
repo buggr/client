@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from 'react-router-dom'
-import Auth from '../../services/Auth'
+import moment from 'moment'
 
 import ErrorMessage from "../ErrorMessage"
 
@@ -8,40 +8,39 @@ import Api from "../../services/Api"
 
 import "./style.scss"
 
-const data = []
-
 export default class HackatonList extends Component {
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      hackatons: []
+    }
   }
 
   componentDidMount(){
     this.getData()
-    //const result = Api.get('/teams')
-    //console.log(result)
-    //const userHackatons = result.filter(hackaton => hackaton.partipants)
   }
 
   async getData(){
-    const { data: teams } = await Api.get('/teams')
+    let hackatons = []
 
-    const userTeams = teams.filter(team => team.participants.length && [...team.participants.map(participant => participant._id === Auth.userData._id && team._id)].includes(team._id))
-    
-    const { data: hackathons} = await Api.get('/hackathons')
+    const { data: teams } = await Api.get('/team?name=buggr')
 
-    const userHackatons = hackathons.filter(hackaton => hackaton.teams.length && [...hackaton.teams.map(team => team._id)].includes([...userTeams.map(team => team._id)]))
-    console.log(userHackatons)
+    teams.map(async team => {
+      const { data: hackathon } = await Api.get('/hackathon?name=' + team.name)
+      hackathon.map(hackathon => hackatons.push(hackathon))
+      this.setState({ hackatons })
+    })
   }
 
   render(){
     return (
       <div className="hackatons-container">
-        {data.length ? (
-          data.map((hackaton, index) => (
+        {this.state.hackatons.length ? (
+          this.state.hackatons.map((hackaton, index) => (
             <Link 
-              to={`/dashboard/hackatons/${hackaton.id}`}
-              key={hackaton.title.toLowerCase() + "-" + index}
+              to={`/dashboard/hackatons/${hackaton._id}`}
+              key={hackaton.name.toLowerCase() + "-" + index}
+              state={hackaton}
             >
               <HackatonCard
                 hackaton={hackaton}
@@ -68,9 +67,9 @@ function HackatonCard({ hackaton }) {
           : "linear-gradient(to right, #fa256c, #bd0140)"
       }}
     >
-      <h1 className="card-title">{hackaton.title}</h1>
+      <h1 className="card-title">{hackaton.name}</h1>
       <div className="card-bottom-container">
-        <span className="card-bottom-date">{hackaton.date}</span>
+        <span className="card-bottom-date">{moment(hackaton.createdAt).format('L')}</span>
         <span className="card-bottom-ended">
           {hackaton.ended ? "Finalizado" : "Em Andamento"}
         </span>

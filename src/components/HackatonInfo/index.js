@@ -15,17 +15,22 @@ export default class HackatonInfo extends Component {
             hackaton: {},
             ready: false,
             modal: false,
+            teams: [],
+            project: {}
         }
 
         this.handleFeedbacks = this.handleFeedbacks.bind(this)
     }
 
     componentDidMount(){
-        const [ hackaton ] = Api().filter(data => data.id === +this.state.hackaton_id)
+        this.getData()
+    }
 
-        setTimeout(() => {
-            this.setState({ hackaton, ready: true })
-        }, 0)
+    async getData(){
+        const { data: teams } = await Api.get('/team?name=buggr')
+        const { data: hackatons } = await Api.get('/hackathons')
+        const [ hackaton ] = hackatons.filter(hackaton => hackaton._id === this.state.hackaton_id)
+        this.setState({ hackaton, team: teams[0], project: teams[0].projects[0], ready: true })
     }
 
     handleFeedbacks(){
@@ -48,9 +53,9 @@ export default class HackatonInfo extends Component {
                             >
                                 {this.state.hackaton.ended ? "VER FEEDBACK" : "FEEDBACK INDISPONÍVEL"}
                             </button>
-                            <HackatonAboutCard />
-                            <TeamAboutCard />
-                            <ProjectAboutCard />
+                            <HackatonAboutCard hackaton={this.state.hackaton} />
+                            <TeamAboutCard team={this.state.team} />
+                            <ProjectAboutCard project={this.state.project} />
                             <Modal
                                 title="Feedbacks"
                                 onCancel={() => this.setState({ modal: false })}
@@ -79,7 +84,7 @@ export default class HackatonInfo extends Component {
     }
 }
 
-function HackatonAboutCard(){
+function HackatonAboutCard({ hackaton }){
     return(
         <div className="about-card-container">
             <div className="card-header">
@@ -87,15 +92,15 @@ function HackatonAboutCard(){
                 <h1 className="header-title">Hackaton</h1>
             </div>
             <p>
-                <strong>Name: </strong>OpenHack Shawee
+                <strong>Name: </strong>{hackaton.name}
                 <br></br>
-                <strong>Status: </strong>Em Andamento
+                <strong>Status: </strong>{hackaton.ended ? 'Finalizado' : 'Em Andamento'}
             </p>
         </div>
     )
 }
 
-function TeamAboutCard(){
+function TeamAboutCard({ team }){
     return(
         <div className="about-card-container">
             <div className="card-header">
@@ -103,13 +108,13 @@ function TeamAboutCard(){
                 <h1 className="header-title">Team</h1>
             </div>
             {
-                team.map(member => <Avatar key={member} style={{ marginRight: 5 }} icon="user" size={40} />)
+                team.participants.map(participant => <Avatar key={participant._id} style={{ marginRight: 5 }} icon="user" size={40} />)
             }
         </div>
     )
 }
 
-function ProjectAboutCard(){
+function ProjectAboutCard({ project }){
     return(
         <div className="about-card-container">
             <div className="card-header">
@@ -117,11 +122,9 @@ function ProjectAboutCard(){
                 <h1 className="header-title">Project</h1>
             </div>
             <p>
-                <strong>Name: </strong>Opinaton
+                <strong>Name: </strong>{project.name}
                 <br></br>
-                <strong>Description: </strong>
-                Um app feito para ajudar os hackers a voltarem do hackaton 
-                sabendo o que é necessário ser feito para vencer na próxima tentativa.
+                <strong>Description: </strong>{project.description}
             </p>
         </div>
     )
