@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Icon } from 'antd'
 
 import './style.scss'
+import Api from '../../services/Api'
 
-let equipes = []
+let teams = []
 
 for(let i=0; i<10; i++){
-    equipes.push({name: 'buggr' + i, id: i})
+    teams.push({name: 'buggr' + i, id: i})
 }
 
 export default class Presentation extends Component {
@@ -15,7 +16,17 @@ export default class Presentation extends Component {
         this.state = {
             current_team: 1,
             presentation: false,
+            teams: []
         }
+    }
+
+    componentDidMount(){
+        this.getData()
+    }
+
+    async getData(){
+        const { data: teams } = await Api.get('/teams')
+        this.setState({ teams })
     }
 
     handlePresentation = (team_id) => {
@@ -37,24 +48,24 @@ export default class Presentation extends Component {
         return(
             <div className="presentation-container">
                 {
-                    equipes.map(equipe => 
+                    this.state.teams.map(team => 
                         <div 
                             className="team-card" 
                             style={{
-                                opacity: this.state.presentation && this.state.current_team !== +equipe.id ? 0.5 : 1
+                                opacity: this.state.presentation && this.state.current_team !== +team.id ? 0.5 : 1
                             }}
-                            key={equipe.id}
+                            key={team.id}
                         >
-                            <h1>{equipe.name}</h1>
+                            <h1>{team.name}</h1>
                             <div 
                                 className="status" 
                                 style={{
-                                    backgroundColor: this.state.presentation && this.state.current_team === +equipe.id ? "#db2222" : "#199719"
+                                    backgroundColor: this.state.presentation && this.state.current_team === +team.id ? "#db2222" : "#199719"
                                 }}
                             >
                                 <Icon 
-                                    type={this.state.presentation && this.state.current_team === +equipe.id ? "close" : "check"} 
-                                    onClick={() => this.handlePresentation(equipe.id)}
+                                    type={this.state.presentation && this.state.current_team === +team.id ? "close" : "check"} 
+                                    onClick={() => this.handlePresentation(team.id)}
                                     style={{ 
                                         fontSize: 20, 
                                         margin: "auto", 
