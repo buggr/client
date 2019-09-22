@@ -3,6 +3,7 @@ import { Layout, Menu, Icon, Avatar } from "antd"
 import { Link } from "react-router-dom"
 
 import Auth from "../services/Auth"
+import { API_URL } from '../services/Api'
 
 import { DashboardRoutes } from "../routes"
 
@@ -11,7 +12,7 @@ import "./Dashboard.scss"
 import socketIOClient from "socket.io-client"
 import Feedback from "../components/Feedback"
 
-const socket = socketIOClient('http://127.0.0.1:3030')
+const socket = socketIOClient(API_URL)
 
 const { Header, Content, Sider } = Layout
 
@@ -54,7 +55,7 @@ export default class Dashboard extends Component {
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={broken => {
-              
+
             }}
             onCollapse={(collapsed, type) => {
               this.setState({ collapsed })

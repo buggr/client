@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { Icon } from 'antd'
 
 import './style.scss'
-import Api from '../../services/Api'
+import Api, { API_URL } from '../../services/Api'
 import socketIOClient from "socket.io-client"
 
-// const socket = socketIOClient('https://opinaton-api.herokuapp.com')
-const socket = socketIOClient('http://127.0.0.1:3030')
+const socket = socketIOClient(API_URL)
 
 let teams = []
 let t

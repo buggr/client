@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Spin, Rate, Button, message } from 'antd'
 import Auth from '../../services/Auth'
+import { API_URL } from '../../services/Api'
 
 import './style.scss'
 import Api from '../../services/Api'
-// import { Socket } from 'dgram'
 
 import socketIOClient from "socket.io-client"
 
-const socket = socketIOClient('http://127.0.0.1:3030')
+const socket = socketIOClient(API_URL)
 
 export default class Feedback extends Component {
     constructor(props){
