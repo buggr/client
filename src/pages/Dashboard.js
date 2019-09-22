@@ -3,16 +3,10 @@ import { Layout, Menu, Icon, Avatar } from "antd"
 import { Link } from "react-router-dom"
 
 import Auth from "../services/Auth"
-import { API_URL } from '../services/Api'
 
 import { DashboardRoutes } from "../routes"
 
 import "./Dashboard.scss"
-
-import socketIOClient from "socket.io-client"
-import Feedback from "../components/Feedback"
-
-const socket = socketIOClient(API_URL)
 
 const { Header, Content, Sider } = Layout
 
