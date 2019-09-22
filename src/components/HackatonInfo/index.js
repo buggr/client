@@ -5,8 +5,6 @@ import Api from '../../services/Api'
 
 import './style.scss'
 
-const team = [1, 2, 3, 4, 5]
-
 export default class HackatonInfo extends Component {
     constructor(props){
         super(props)
