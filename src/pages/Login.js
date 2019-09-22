@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
+import Api from '../services/Api'
+import Auth from '../services/Auth'
 
 import logo from '../assets/logo.png'
 
@@ -12,7 +14,12 @@ export default class Login extends Component {
             email: '',
             password: '',
             loading: false,
+            error: false,
         }
+    }
+
+    componentDidMount(){
+        if (Auth.userData) this.props.history.push('/dashboard/hackatons')
     }
 
     handleChange = event => {
@@ -21,12 +28,24 @@ export default class Login extends Component {
         })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
+        setTimeout(() => {
+            this.setState({ loading: false, error: true })
+            if (this.state.error) message.error("Something went wrong!")
+        }, 5000)
+
         event.preventDefault()
         this.setState({ loading: true, email: '', password: '' })
-        setTimeout(() => {
+
+        const result = await Api.post('/users', {
+            email: this.state.email,
+            password: this.state.password,
+        })
+        
+        if (result.data) {
+            Auth.userData = result.data
             this.props.history.push('/dashboard/hackatons')
-        }, 1000)
+        }
     }
 
     render(){

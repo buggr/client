@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Spin } from 'antd'
 import Fade from 'react-reveal/Fade'
 import { withUserAgent } from 'react-useragent'
+import Auth from '../services/Auth'
 
 import ErrorMessage from '../components/ErrorMessage'
 
@@ -19,7 +20,8 @@ class Main extends Component {
 
     componentDidMount(){
         setTimeout(() => {
-            if (!this.state.error) this.props.history.push('/login')
+            if (Auth.userData) this.props.history.push('/dashboard/hackatons')
+            else if (!this.state.error) this.props.history.push('/login')
         }, 1000)
     }
 

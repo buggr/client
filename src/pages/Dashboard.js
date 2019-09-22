@@ -31,20 +31,13 @@ export default class Dashboard extends Component {
   }
 
   handleLogout(){
-    this.props.history.push('/login')
+    Auth.logout()
   }
 
-  componentDidMount() {
-    const userData = {
-      name: "Guilherme Mota Bromonschenkel Lima",
-      email: "guilhermebromonschenkel@gmail.com",
-      team: "buggr",
-      avatar_url: "https://avatars3.githubusercontent.com/u/42042433?s=460&v=4"
-    }
-    Auth.userData = userData
+  componentDidMount(){
+    if (!Auth.userData) this.props.history.push('/login')
     this.getCurrentPage()
-    this.setState({ ready: true, userData })
-    //this.props.history.push('/dashboard/hackatons')
+    this.setState({ ready: true, userData: Auth.userData })
   }
 
   render() {
@@ -65,7 +58,7 @@ export default class Dashboard extends Component {
           >
             <div className="user-container">
               <Avatar className="user-avatar" icon="user" size={40} src={this.state.userData.avatar_url} />
-              <span className="user-name">{this.state.userData.name}</span>
+              <span className="user-name">{this.state.userData.nickname}</span>
             </div>
             <Menu
               theme="light"
