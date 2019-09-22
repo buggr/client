@@ -30,7 +30,7 @@ export default class Presentation extends Component {
     }
 
     handlePresentation = (team_id) => {
-        if(this.state.presentation && this.state.current_team === +team_id){
+        if(this.state.presentation && this.state.current_team === team_id){
             this.setState({
                 presentation: false,
                 current_team: team_id
@@ -52,20 +52,20 @@ export default class Presentation extends Component {
                         <div 
                             className="team-card" 
                             style={{
-                                opacity: this.state.presentation && this.state.current_team !== +team.id ? 0.5 : 1
+                                opacity: this.state.presentation && this.state.current_team !== team._id ? 0.5 : 1
                             }}
-                            key={team.id}
+                            key={team._id}
                         >
                             <h1>{team.name}</h1>
                             <div 
                                 className="status" 
                                 style={{
-                                    backgroundColor: this.state.presentation && this.state.current_team === +team.id ? "#db2222" : "#199719"
+                                    backgroundColor: this.state.presentation && this.state.current_team === team._id ? "#db2222" : "#199719"
                                 }}
                             >
                                 <Icon 
-                                    type={this.state.presentation && this.state.current_team === +team.id ? "close" : "check"} 
-                                    onClick={() => this.handlePresentation(team.id)}
+                                    type={this.state.presentation && this.state.current_team === team._id ? "close" : "check"} 
+                                    onClick={() => this.handlePresentation(team._id)}
                                     style={{ 
                                         fontSize: 20, 
                                         margin: "auto", 
