@@ -1,8 +1,8 @@
+# firebase
+.firebase/
+
 # build folder
 /build
 
 # npm
 /node_modules
-
-# firebase
-.firebase
